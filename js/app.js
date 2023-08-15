@@ -22,13 +22,16 @@ class Product {
 
 class UiStock{
     constructor(){
-        this.form= document.querySelector()
-    }
+        this.productName= document.querySelector(`[name="productName"]`).value
+        this.cost= document.querySelector(`[name="cost"]`).value
+        
+      }
 
 }
 
 
 let nwProduct = new Product("Agenda devocional", 30000, 59000, 500);
 
+console.log(JSON.stringify(nwProduct))
 console.log(nwProduct.profitMade());
 console.log(nwProduct.total);

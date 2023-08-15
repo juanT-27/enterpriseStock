@@ -15,8 +15,8 @@ const showValidations = (spanEl,clss) => {
 
 const logInValidation = (e) => {
   e.preventDefault();
-  let inputPassword = document.getElementById("inputPassword").value;
-  let inputName = document.getElementById("inputName").value;
+  let inputPassword = document.querySelector(`[name="password"]`).value;
+  let inputName = document.querySelector(`[name="Username"]`).value;
 
   if (inputName !== manager.userName) {
     showValidations(".userError", "invisible");
@@ -31,7 +31,7 @@ const logInValidation = (e) => {
   }
 
   if (inputPassword === manager.password && inputName === manager.userName) {
-    window.location.href = "index.html";
+    window.location.href = "stock.html";
   }
 };
 
