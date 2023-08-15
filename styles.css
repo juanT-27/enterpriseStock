@@ -1,0 +1,73 @@
+body{
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 500;
+}
+
+main{
+    background-image: url(https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=913&q=80);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+label{
+    color: aliceblue;
+}
+
+.log-in-form{
+    width: 15rem;
+    height: 15.7rem;
+    max-height: 30rem;
+    background-color: rgb(200, 154, 241);
+}
+
+.inputLogin:focus{
+background-color: rgb(220, 227, 226);
+color: #000;
+border: none;
+}
+
+.btn-primary{
+    background-color: #3b8282;
+}
+
+.btn-primary:hover{
+    background-color: #1f6e6e;
+
+}
+
+.invisible{
+    display: none;
+}
+
+@media (min-width: 576px) {  
+    .log-in-form{
+        width: 20rem;
+        
+        height: 15rem;
+        max-height: 40rem;
+       
+    }
+}
+
+
+@media (min-width: 768px) {
+    .log-in-form{
+        width: 35rem;
+        height: 20rem;
+    }
+ }
+
+@media (min-width: 992px) { 
+  
+}
+
+
+@media (min-width: 1200px) {
+  
+ }
+
+
+@media (min-width: 1400px) { 
+  
+}
