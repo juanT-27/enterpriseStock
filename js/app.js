@@ -1,10 +1,10 @@
 class Product {
-  constructor(pName, cost, price, units,categorie) {
+  constructor(pName, cost, price, units, category) {
     this.pName = pName;
     this.cost = cost;
     this.price = price;
     this.units = units;
-    this.categorie= categorie;
+    this.category = category;
     this.total = this.totalProfit();
   }
 
@@ -20,18 +20,118 @@ class Product {
   }
 }
 
-class UiStock{
-    constructor(){
-        this.productName= document.querySelector(`[name="productName"]`).value
-        this.cost= document.querySelector(`[name="cost"]`).value
-        
-      }
+let formToAdd = document.querySelector("#addProduct");
+
+class UiStock {
+  constructor() {
+    this.productsArray = [];
+    this.notebooksContainer= document.querySelector(".notebook")
+    this.accesoriesContainer= document.querySelector(".accesories")
+    this.officeContainer= document.querySelector(".office")
+  }
+
+  validateInputs(e){
+ 
+    this.productName = document.querySelector(".name").value;
+    this.cost = document.querySelector(`.cost`).value;
+    this.price = document.querySelector(`.sale`).value;
+    this.units = document.querySelector(`.units`).value;
+    this.category = document.querySelector(`.category`).value;
+
+    if(this.productName ==="" || this.cost=== "" || this.price === "" || this.units===""){
+      alert("Ningun valor puede estar vacío")
+    } else{
+      this.pushProduct(this.productName, this.cost, this.price, this.units, this.category)
+    }
+
+    e.target.reset()
+  }
+
+  pushProduct(pName, cost, price, units, category) {
+  
+
+    let newProduct = new Product(
+      pName, 
+      cost,
+      price, 
+      units,
+     category
+    );
+
+    this.productsArray.push(newProduct);
+    console.log(this.productsArray)
+  }
+
+  
+
+  createCard(){
+   this.$template= document.getElementById("productTemplate").content
+   
+    this.$fragment= document.createDocumentFragment()
+    this.notebooksContainer.innerHTML= ""
+    this.productsArray.forEach((element)=>{
+      
+      this.$template.querySelector(".card-title").textContent= element.pName;
+      this.$template.querySelector(".cost").textContent= "Costo de producción: " + element.cost;
+      this.$template.querySelector(".price").textContent= "Precio de venta " + element.price;
+      this.$template.querySelector(".units").textContent= "Unidades disponibles " + element.units;
+      
+      let deleteBtn= this.$template.querySelector(".deleteBtn")
+      deleteBtn.setAttribute("data-product", element.pName)
+
+      // this.editBtn= this.$template.querySelector("editBtn")
+
+      let $clone = document.importNode(this.$template, true);
+      this.$fragment.appendChild($clone);
+
+      this.renderCard(element.category, this.$fragment)
+
+     
+    })
+  }
+
+  
+
+  renderCard(category, frag){
+    if(category==="1"){
+      this.notebooksContainer.appendChild(frag)
+    }else if(category==="2"){
+      this.accesoriesContainer.appendChild(frag)
+    } else if(category==="3"){
+      this.officeContainer.appendChild(frag)
+    }
+  }
+
+  deleteProduct(dataAtt){
+    let productTodelete= this.productsArray.findIndex((el)=> el.pName === dataAtt )
+    if(productTodelete!== -1){
+    this.productsArray.splice(productTodelete, 1)
+    console.log(this.productsArray)
+    }
+    this.createCard()
+  }
 
 }
 
+let UiStockmanager = new UiStock();
 
-let nwProduct = new Product("Agenda devocional", 30000, 59000, 500);
 
-console.log(JSON.stringify(nwProduct))
-console.log(nwProduct.profitMade());
-console.log(nwProduct.total);
+
+formToAdd.addEventListener("submit", (e) => {
+  e.preventDefault();
+  UiStockmanager.validateInputs(e);
+  UiStockmanager.createCard();
+  
+});
+
+document.addEventListener("click", (e)=>{
+if(e.target.classList.contains("deleteBtn")){
+  let deleteBtn= e.target
+  let data= deleteBtn.getAttribute("data-product")
+  
+  UiStockmanager.deleteProduct(data)
+}
+})
+
+
+
