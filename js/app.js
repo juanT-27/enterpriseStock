@@ -69,6 +69,10 @@ class UiStock {
    
     this.$fragment= document.createDocumentFragment()
     this.notebooksContainer.innerHTML= ""
+    
+    this.accesoriesContainer.innerHTML = "";
+    this.officeContainer.innerHTML = "";
+
     this.productsArray.forEach((element)=>{
       
       this.$template.querySelector(".card-title").textContent= element.pName;
@@ -81,6 +85,11 @@ class UiStock {
 
       // this.editBtn= this.$template.querySelector("editBtn")
 
+      let editProductBtn= this.$template.querySelector(".editBtn")
+      editProductBtn.setAttribute("data-edit", element.pName)
+      editProductBtn.setAttribute("data-bs-toggle", "modal")
+      editProductBtn.setAttribute("data-bs-target", "#addProduct")
+      
       let $clone = document.importNode(this.$template, true);
       this.$fragment.appendChild($clone);
 
@@ -111,6 +120,19 @@ class UiStock {
     this.createCard()
   }
 
+  editForm(data){
+    let object= this.productsArray.find((el)=>el.pName === data)
+    let objectIndex= this.productsArray.find((el)=> el.pName=== data)
+  
+    this.productName = document.querySelector(".name").value = object.pName;
+    this.cost = document.querySelector(`.cost`).value= object.cost;
+    this.price = document.querySelector(`.sale`).value= object.price;
+    this.units = document.querySelector(`.units`).value= object.units;
+    this.category = document.querySelector(`.category`).value= object.category;
+    
+    this.productsArray.splice(objectIndex, 1)
+    
+  }
 }
 
 let UiStockmanager = new UiStock();
@@ -128,9 +150,15 @@ document.addEventListener("click", (e)=>{
 if(e.target.classList.contains("deleteBtn")){
   let deleteBtn= e.target
   let data= deleteBtn.getAttribute("data-product")
-  
   UiStockmanager.deleteProduct(data)
 }
+
+if(e.target.classList.contains("editBtn")){
+    let editBtn= e.target;
+    let data= editBtn.getAttribute("data-edit")
+    UiStockmanager.editForm(data)
+}
+
 })
 
 
